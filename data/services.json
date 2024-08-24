@@ -1,7 +1,4 @@
 {
     "Service Name": "otpauth://totp/ServiceeName?secret=JBSSX3DPEHPK3PXP",
-    "Service Name 2": "otpauth://totp/ServiceeName2?secret=JBSSX3DPEHSK3PXP",
-    "NewService": "otpauth://totp/TestService?secret=JBSWY3DPEHPK3PXP",
-    "UpdatedService": "otpauth://totp/UpdatedService?secret=JBSWY3DPEHPK3PXP",
-    "TestService": "otpauth://totp/TestService?secret=JBSWY3DPEHPK3PXP"
+    "Service Name 2": "otpauth://totp/ServiceeName2?secret=JBSSX3DPEHSK3PXP"
 }

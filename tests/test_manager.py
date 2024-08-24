@@ -1,3 +1,4 @@
+import os
 import unittest
 
 from auth_manager.manager import OTPManager
@@ -5,10 +6,18 @@ from auth_manager.manager import OTPManager
 
 class TestOTPManager(unittest.TestCase):
     def setUp(self):
-        """Set up a fresh OTPManager instance before each test."""
-        self.manager = OTPManager()
+        """Set up a fresh OTPManager instance using a test-specific JSON file."""
+        self.test_file = os.path.join(
+            os.path.dirname(__file__), "../data/test_services.json"
+        )
+        self.manager = OTPManager(data_file=self.test_file)
         self.test_uri = "otpauth://totp/TestService?secret=JBSWY3DPEHPK3PXP"
         self.manager.add_service("TestService", self.test_uri)
+
+    def tearDown(self):
+        """Clean up the test JSON file after each test."""
+        if os.path.exists(self.test_file):
+            os.remove(self.test_file)
 
     def test_add_service(self):
         """Test adding a new service and verifying its existence."""
