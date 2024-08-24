@@ -47,6 +47,6 @@ class OTPManager:
             try:
                 totp = pyotp.parse_uri(uri)
                 return totp.now()
-            except Exception as e:
+            except Exception:
                 return "Invalid Secret"
         return None
