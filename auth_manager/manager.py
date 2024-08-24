@@ -44,6 +44,9 @@ class OTPManager:
         """Generate and return the OTP code for the given service."""
         uri = self.services.get(name)
         if uri:
-            totp = pyotp.parse_uri(uri)
-            return totp.now()
+            try:
+                totp = pyotp.parse_uri(uri)
+                return totp.now()
+            except Exception as e:
+                return "Invalid Secret"
         return None
