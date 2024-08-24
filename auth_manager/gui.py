@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import Button, Entry, Label, Menu, Toplevel, messagebox
 from tkinter.font import Font
-
 from .manager import OTPManager
 
 
@@ -11,6 +10,7 @@ class OTPApp(tk.Tk):
         self.title("2FA Manager")
         self.geometry("400x500")
         self.manager = OTPManager()
+        self.update_interval = 1000  # 1 second for countdown update
 
         # Fonts
         self.service_name_font = Font(family="Helvetica", size=16, weight="bold")
@@ -39,8 +39,12 @@ class OTPApp(tk.Tk):
         for widget in self.services_frame.winfo_children():
             widget.destroy()
 
+        self.service_cards = []
         for name in self.manager.services:
             self.create_service_card(name)
+
+        # Start the countdown for all services
+        self.start_countdown(30)
 
     def create_service_card(self, name):
         # Frame for each service "card"
@@ -59,10 +63,23 @@ class OTPApp(tk.Tk):
         )
         service_name_label.pack(side="top", anchor="w")
 
+        # OTP code and countdown frame
+        code_frame = tk.Frame(text_frame)
+        code_frame.pack(side="top", anchor="w")
+
         # OTP code
-        code = self.manager.get_code(name)
-        code_label = tk.Label(text_frame, text=code, font=self.code_font, fg="blue")
-        code_label.pack(side="top", anchor="w")
+        code_label = tk.Label(code_frame, font=self.code_font, fg="blue")
+        code_label.pack(side="left", anchor="w")
+
+        # Countdown label (next to the code)
+        countdown_label = tk.Label(code_frame, text="30", font=self.service_name_font, fg="red")
+        countdown_label.pack(side="left", padx=30)
+
+        # Store references to labels for updating later
+        self.service_cards.append((name, code_label, countdown_label))
+
+        # Initialize code
+        self.update_code(name, code_label)
 
         # Three dots menu inside a circle
         canvas = tk.Canvas(
@@ -85,6 +102,27 @@ class OTPApp(tk.Tk):
             anchor="center",
         )
         canvas.bind("<Button-1>", lambda e, n=name: self.show_options_menu(n, canvas))
+
+    def update_code(self, service_name, code_label):
+        """Update the OTP code for a specific service."""
+        code = self.manager.get_code(service_name)
+        code_label.config(text=code)
+
+    def start_countdown(self, remaining):
+        if remaining >= 0:
+            for _, code_label, countdown_label in self.service_cards:
+                countdown_label.config(text=f"{remaining}")
+            remaining -= 1
+            self.after(1000, self.start_countdown, remaining)
+        else:
+            # When the countdown finishes, refresh all codes
+            self.refresh_all_codes()
+            self.start_countdown(30)  # Restart countdown after refreshing codes
+
+    def refresh_all_codes(self):
+        """Automatically refresh all codes after countdown."""
+        for name, code_label, _ in self.service_cards:
+            self.update_code(name, code_label)
 
     def show_options_menu(self, service_name, button):
         menu = Menu(self, tearoff=0)
