@@ -20,12 +20,16 @@ class OTPApp(tk.Tk):
         self.services_frame = tk.Frame(self)
         self.services_frame.pack(fill="both", expand=True, padx=10, pady=10)
 
-        # Plus button to add new service (floating style)
-        plus_button = tk.Label(
-            self, text="+", font=self.plus_font, fg="#007BFF", cursor="hand2"
+        # Plus button to add new service with a circle around it
+        plus_button_canvas = tk.Canvas(
+            self, width=40, height=40, highlightthickness=0, bg=None, cursor="hand2"
         )
-        plus_button.place(relx=0.9, rely=0.9, anchor="center")
-        plus_button.bind("<Button-1>", lambda e: self.add_service())
+        plus_button_canvas.place(relx=0.9, rely=0.9, anchor="center")
+        plus_button_canvas.create_oval(5, 5, 38, 38, outline="#007BFF", width=2)
+        plus_button_canvas.create_text(
+            21, 19.5, text="+", font=self.plus_font, fill="#007BFF", anchor="center"
+        )
+        plus_button_canvas.bind("<Button-1>", lambda e: self.add_service())
 
         # Load and display existing services
         self.refresh_service_list()
@@ -61,12 +65,23 @@ class OTPApp(tk.Tk):
 
         # Three dots menu inside a circle
         canvas = tk.Canvas(
-            card_frame, width=30, height=30, highlightthickness=0, bg=None
+            card_frame,
+            width=30,
+            height=30,
+            highlightthickness=0,
+            bg=None,
+            cursor="hand2",
         )
         canvas.pack(side="right", anchor="e", padx=5)
         canvas.create_oval(5, 5, 25, 25, outline="#A9A9A9", width=2)
         canvas.create_text(
-            15, 15, text="⋯", font=self.service_name_font, fill="#A9A9A9", width=2
+            15,
+            15,
+            text="⋯",
+            font=self.service_name_font,
+            fill="#A9A9A9",
+            width=2,
+            anchor="center",
         )
         canvas.bind("<Button-1>", lambda e, n=name: self.show_options_menu(n, canvas))
 
@@ -156,7 +171,7 @@ class OTPApp(tk.Tk):
     def clear_placeholder(self, event, entry):
         if entry.get() in [
             "Service Name",
-            "otpauth://totp/ServiceName?secret=JBSWY3DPEHPK3PXP",
+            "otpauth://totp/ServiceName?secret=JBSWX3DPEHPK3PXP",
         ]:
             entry.delete(0, tk.END)
             entry.config(fg="black")
