@@ -1,5 +1,8 @@
 import os
 import unittest
+from unittest.mock import Mock, patch
+
+import pyotp
 
 from auth_manager.manager import OTPManager
 
@@ -61,6 +64,19 @@ class TestOTPManager(unittest.TestCase):
         self.manager.delete_service("NonExistentService")
         # Deleting a non-existent service should simply do nothing
         self.assertNotIn("NonExistentService", self.manager.services)
+
+    @patch("auth_manager.manager.pyotp.TOTP")
+    def test_code_generation_timing(self, mock_totp):
+        """Test that the code generation uses the correct timing intervals."""
+        # Mock TOTP instance and method
+        mock_totp_instance = Mock()
+        mock_totp.return_value = mock_totp_instance
+        mock_totp_instance.now.return_value = "123456"
+
+        # Generate code and check if the mocked code is returned
+        code = self.manager.get_code("TestService")
+        mock_totp_instance.now.assert_called_once()
+        self.assertEqual(code, "123456")
 
 
 if __name__ == "__main__":

@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import Button, Entry, Label, Menu, Toplevel, messagebox
 from tkinter.font import Font
+
 from .manager import OTPManager
 
 
@@ -13,7 +14,9 @@ class OTPApp(tk.Tk):
         self.update_interval = 1000  # 1 second for countdown update
 
         # Fonts
-        self.service_name_font = Font(family="Helvetica", size=16, weight="bold")
+        self.service_name_font = Font(
+            family="Helvetica", size=16, weight="bold"
+        )
         self.code_font = Font(family="Helvetica", size=20, weight="bold")
         self.plus_font = Font(family="Helvetica", size=28, weight="bold")
 
@@ -23,12 +26,16 @@ class OTPApp(tk.Tk):
 
         # Plus button to add new service with a circle around it
         plus_button_canvas = tk.Canvas(
-            self, width=40, height=40, highlightthickness=0, bg=None, cursor="hand2"
+            self, width=40, height=40, highlightthickness=0, bg=None,
+            cursor="hand2"
         )
         plus_button_canvas.place(relx=0.9, rely=0.9, anchor="center")
-        plus_button_canvas.create_oval(5, 5, 38, 38, outline="#007BFF", width=2)
+        plus_button_canvas.create_oval(
+            5, 5, 38, 38, outline="#007BFF", width=2
+        )
         plus_button_canvas.create_text(
-            21, 19.5, text="+", font=self.plus_font, fill="#007BFF", anchor="center"
+            21, 19.5, text="+", font=self.plus_font, fill="#007BFF",
+            anchor="center"
         )
         plus_button_canvas.bind("<Button-1>", lambda e: self.add_service())
 
@@ -72,7 +79,9 @@ class OTPApp(tk.Tk):
         code_label.pack(side="left", anchor="w")
 
         # Countdown label (next to the code)
-        countdown_label = tk.Label(code_frame, text="30", font=self.service_name_font, fg="red")
+        countdown_label = tk.Label(
+            code_frame, text="30", font=self.service_name_font, fg="red"
+        )
         countdown_label.pack(side="left", padx=30)
 
         # Store references to labels for updating later
@@ -101,7 +110,9 @@ class OTPApp(tk.Tk):
             width=2,
             anchor="center",
         )
-        canvas.bind("<Button-1>", lambda e, n=name: self.show_options_menu(n, canvas))
+        canvas.bind(
+            "<Button-1>", lambda e, n=name: self.show_options_menu(n, canvas)
+        )
 
     def update_code(self, service_name, code_label):
         """Update the OTP code for a specific service."""
@@ -117,7 +128,7 @@ class OTPApp(tk.Tk):
         else:
             # When the countdown finishes, refresh all codes
             self.refresh_all_codes()
-            self.start_countdown(30)  # Restart countdown after refreshing codes
+            self.start_countdown(30)  # Restart countdown after refreshing
 
     def refresh_all_codes(self):
         """Automatically refresh all codes after countdown."""
@@ -126,7 +137,9 @@ class OTPApp(tk.Tk):
 
     def show_options_menu(self, service_name, button):
         menu = Menu(self, tearoff=0)
-        menu.add_command(label="Edit", command=lambda: self.edit_service(service_name))
+        menu.add_command(
+            label="Edit", command=lambda: self.edit_service(service_name)
+        )
         menu.add_command(
             label="Delete", command=lambda: self.delete_service(service_name)
         )
@@ -166,15 +179,23 @@ class OTPApp(tk.Tk):
             )
 
             # TOTP URI
-            Label(dialog, text="TOTP URI:", anchor="w").pack(fill="x", pady=5, padx=10)
+            Label(dialog, text="TOTP URI:", anchor="w").pack(
+                fill="x", pady=5, padx=10
+            )
             uri_entry = Entry(dialog, fg="gray")
             uri_entry.pack(fill="x", pady=5, padx=10)
-            uri_entry.insert(0, "otpauth://totp/ServiceName?secret=JBSWX3DPEHPK3PXP")
-            uri_entry.bind("<FocusIn>", lambda e: self.clear_placeholder(e, uri_entry))
+            uri_entry.insert(
+                0, "otpauth://totp/ServiceName?secret=JBSWX3DPEHPK3PXP"
+            )
+            uri_entry.bind(
+                "<FocusIn>", lambda e: self.clear_placeholder(e, uri_entry)
+            )
             uri_entry.bind(
                 "<FocusOut>",
                 lambda e: self.add_placeholder(
-                    e, uri_entry, "otpauth://totp/ServiceName?secret=JBSWX3DPEHPK3PXP"
+                    e,
+                    uri_entry,
+                    "otpauth://totp/ServiceName?secret=JBSWX3DPEHPK3PXP"
                 ),
             )
 
@@ -188,7 +209,9 @@ class OTPApp(tk.Tk):
             name_entry.insert(0, name)
 
             # TOTP URI
-            Label(dialog, text="TOTP URI:", anchor="w").pack(fill="x", pady=5, padx=10)
+            Label(dialog, text="TOTP URI:", anchor="w").pack(
+                fill="x", pady=5, padx=10
+            )
             uri_entry = Entry(dialog)
             uri_entry.pack(fill="x", pady=5, padx=10)
             uri_entry.insert(0, uri)
