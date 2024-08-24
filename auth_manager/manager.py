@@ -1,5 +1,6 @@
 import json
 import os
+
 import pyotp
 
 DATA_FILE = os.path.join(os.path.dirname(__file__), "../data/services.json")

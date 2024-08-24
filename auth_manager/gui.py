@@ -1,6 +1,7 @@
 import tkinter as tk
-from tkinter import messagebox, Menu, Toplevel, Label, Entry, Button
+from tkinter import Button, Entry, Label, Menu, Toplevel, messagebox
 from tkinter.font import Font
+
 from .manager import OTPManager
 
 

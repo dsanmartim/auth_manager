@@ -1,21 +1,21 @@
 import unittest
+
 from auth_manager.manager import OTPManager
 
 
 class TestOTPManager(unittest.TestCase):
-    
     def setUp(self):
         """Set up a fresh OTPManager instance before each test."""
         self.manager = OTPManager()
         self.test_uri = "otpauth://totp/TestService?secret=JBSWY3DPEHPK3PXP"
         self.manager.add_service("TestService", self.test_uri)
-    
+
     def test_add_service(self):
         """Test adding a new service and verifying its existence."""
         self.manager.add_service("NewService", self.test_uri)
         self.assertIn("NewService", self.manager.services)
         self.assertEqual(self.manager.services["NewService"], self.test_uri)
-    
+
     def test_get_code(self):
         """Test generating a code for an existing service."""
         code = self.manager.get_code("TestService")
