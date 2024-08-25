@@ -52,13 +52,6 @@
 2. **Edit a Service**: Click on the three-dot menu next to the service you want to edit, select "Edit," make the necessary changes, and click "Save."
 3. **Delete a Service**: Click on the three-dot menu next to the service you want to delete, select "Delete," and confirm the deletion.
 
-## Running Tests
-
-Unit tests are provided to verify the functionality of the Auth Manager. To run the tests, execute the following command:
-
-```bash
-python -m pytest -vs tests/test_manager.py
-```
 
 ## Project Structure
 
@@ -69,6 +62,17 @@ python -m pytest -vs tests/test_manager.py
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a pull request or open an issue if you have suggestions for improvements or encounter any bugs.
+
+### Running Tests
+
+Unit tests are provided to verify the functionality of the Auth Manager. 
+If you make a contribution, make sure to add unit test to it. 
+To run the tests, execute the following command:
+
+```bash
+python -m pytest -vs tests/test_manager.py
+```
+
 
 ## License
 
