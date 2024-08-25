@@ -73,7 +73,6 @@ To run the tests, execute the following command:
 python -m pytest -vs tests/test_manager.py
 ```
 
-
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
