@@ -1,78 +1,77 @@
-# 2FA Manager
+# Auth Manager
 
 ## Overview
 
-2FA Manager is a simple and user-friendly two-factor authentication (2FA) code manager built with Python and Tkinter. The application supports adding, editing, deleting, and viewing OTP (One-Time Password) codes for various services. It automatically refreshes OTP codes every 30 seconds and adapts to the system's dark mode.
+**Auth Manager** is a simple and intuitive 2FA (Two-Factor Authentication) manager that supports TOTP (Time-based One-Time Password) codes. This tool allows you to manage your TOTP-based 2FA codes in one place, with a user-friendly graphical interface.
 
 ## Features
 
-- Add, edit, and delete services.
-- Automatically refresh OTP codes with a 30-second countdown.
-- Adapts to system dark mode on macOS.
-- Simple and intuitive UI with support for both dark and light themes.
-- Easily clone and set up the project locally.
+- **TOTP Code Generation**: Generate and display TOTP codes for multiple services.
+- **Automatic Refresh**: Codes automatically refresh every 30 seconds, with a countdown timer displayed next to each code.
+- **Service Management**: Add, edit, and delete services easily from the interface.
+- **Dark Mode Support**: The application adapts to the system's dark mode setting, changing colors accordingly.
 
 ## Installation
 
 ### Prerequisites
 
-- Python 3.11 or later.
-- `pip` (Python package installer).
+- Python 3.11 or higher
 
+### Setup
 
-### Clone the Repository
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/yourusername/auth_manager.git
+    cd auth_manager
+    ```
 
-```bash
-git clone https://github.com/yourusername/2fa_manager.git
-cd 2fa_manager
-```
+2. Create and activate a virtual environment:
+    ```bash
+    python3 -m venv venv
+    source venv/bin/activate
+    ```
 
-### Set Up a Virtual Environment
+3. Install the required packages:
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-It's recommended to use a virtual environment to manage dependencies:
-
-```bash
-python3 -m venv venv
-source venv/bin/activate  # On Windows use 
-```
-
-### Install the Requirements
-
-```bash
-pip install -r requirements.txt
-```
-
-### Run the Application
-
-```bash
-python run_app.py
-```
+4. Run the application:
+    ```bash
+    python run_app.py
+    ```
 
 ## Usage
 
-1. **Add a Service**: Click on the "+" button to add a new service. Enter the service name and OTP URI.
-2. **Edit a Service**: Click on the three dots next to a service and select "Edit".
-3. **Delete a Service**: Click on the three dots next to a service and select "Delete".
-4. **View OTP Code**: The OTP code for each service is displayed and automatically refreshes every 30 seconds.
+1. **Add a New Service**: Click the "+" button at the bottom-right corner of the window to add a new service. Enter the service name and TOTP URI, then click "Save."
+2. **Edit a Service**: Click on the three-dot menu next to the service you want to edit, select "Edit," make the necessary changes, and click "Save."
+3. **Delete a Service**: Click on the three-dot menu next to the service you want to delete, select "Delete," and confirm the deletion.
 
-## Unit Testing
+## Running Tests
 
-Unit tests are provided to ensure the correctness of the core functionality.
-
-### Run Unit Tests
+Unit tests are provided to verify the functionality of the Auth Manager. To run the tests, execute the following command:
 
 ```bash
-python -m unittest discover tests
+python -m pytest -vs tests/test_manager.py
 ```
+
+## Project Structure
+
+- **auth_manager/**: Contains the core application files ( and ).
+- **data/**: Stores the  file, which contains your service data.
+- **tests/**: Contains unit tests for the application.
 
 ## Contributing
 
-Contributions are welcome! Please fork this repository and submit a pull request for any changes you'd like to make.
+Contributions are welcome! Please feel free to submit a pull request or open an issue if you have suggestions for improvements or encounter any bugs.
 
 ## License
 
-This project is licensed under the MIT License. See the LICENSE file for details.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
 
-## Acknowledgments
+## Author
 
-- Thanks to the open-source community for the tools and libraries used in this project.
+**David Sanmartim**
+- GitHub: [dsanmartim](https://github.com/dsanmartim)
+- Email: [davidsanm@gmail.com](mailto:davidsanm@gmail.com)
+
