@@ -4,6 +4,8 @@
 
 **Auth Manager** is a simple and intuitive 2FA (Two-Factor Authentication) manager that supports TOTP (Time-based One-Time Password) codes. This tool allows you to manage your TOTP-based 2FA codes in one place, with a user-friendly graphical interface.
 
+This is specially useful because it eliminates the need to grab your phone every time you need to log in to a service that requires 2FA. Instead, you can quickly access the codes from your computer, making the login process more convenient and efficient.
+
 ## Features
 
 - **TOTP Code Generation**: Generate and display TOTP codes for multiple services.
