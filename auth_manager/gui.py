@@ -19,9 +19,7 @@ class OTPApp(tk.Tk):
         self.apply_theme()
 
         # Fonts
-        self.service_name_font = Font(
-            family="Helvetica", size=16, weight="bold"
-        )
+        self.service_name_font = Font(family="Helvetica", size=16, weight="bold")
         self.code_font = Font(family="Helvetica", size=20, weight="bold")
         self.plus_font = Font(family="Helvetica", size=28, weight="bold")
 
@@ -123,8 +121,7 @@ class OTPApp(tk.Tk):
 
         # OTP code
         code_label = tk.Label(
-            code_frame, font=self.code_font, fg=self.code_color,
-            bg=self.card_bg_color
+            code_frame, font=self.code_font, fg=self.code_color, bg=self.card_bg_color
         )
         code_label.pack(side="left", anchor="w")
 
@@ -164,9 +161,7 @@ class OTPApp(tk.Tk):
             width=2,
             anchor="center",
         )
-        canvas.bind("<Button-1>", lambda e, n=name: self.show_options_menu(
-            n, canvas)
-        )
+        canvas.bind("<Button-1>", lambda e, n=name: self.show_options_menu(n, canvas))
 
     def update_code(self, service_name, code_label):
         """Update the OTP code for a specific service."""
@@ -191,9 +186,7 @@ class OTPApp(tk.Tk):
 
     def show_options_menu(self, service_name, button):
         menu = Menu(self, tearoff=0)
-        menu.add_command(
-            label="Edit", command=lambda: self.edit_service(service_name)
-        )
+        menu.add_command(label="Edit", command=lambda: self.edit_service(service_name))
         menu.add_command(
             label="Delete", command=lambda: self.delete_service(service_name)
         )
@@ -238,26 +231,16 @@ class OTPApp(tk.Tk):
 
             # TOTP URI
             Label(
-                dialog, 
-                text="TOTP URI:",
-                anchor="w",
-                bg=self.bg_color,
-                fg=self.fg_color
+                dialog, text="TOTP URI:", anchor="w", bg=self.bg_color, fg=self.fg_color
             ).pack(fill="x", pady=5, padx=10)
             uri_entry = Entry(dialog, fg="gray")
             uri_entry.pack(fill="x", pady=5, padx=10)
-            uri_entry.insert(
-                0, "otpauth://totp/ServiceName?secret=JBSWX3DPEHPK3PXP"
-            )
-            uri_entry.bind(
-                "<FocusIn>", lambda e: self.clear_placeholder(e, uri_entry)
-            )
+            uri_entry.insert(0, "otpauth://totp/ServiceName?secret=JBSWX3DPEHPK3PXP")
+            uri_entry.bind("<FocusIn>", lambda e: self.clear_placeholder(e, uri_entry))
             uri_entry.bind(
                 "<FocusOut>",
                 lambda e: self.add_placeholder(
-                    e, 
-                    uri_entry,
-                    "otpauth://totp/ServiceName?secret=JBSWX3DPEHPK3PXP"
+                    e, uri_entry, "otpauth://totp/ServiceName?secret=JBSWX3DPEHPK3PXP"
                 ),
             )
 
@@ -276,11 +259,7 @@ class OTPApp(tk.Tk):
 
             # TOTP URI
             Label(
-                dialog,
-                text="TOTP URI:",
-                anchor="w",
-                bg=self.bg_color,
-                fg=self.fg_color
+                dialog, text="TOTP URI:", anchor="w", bg=self.bg_color, fg=self.fg_color
             ).pack(fill="x", pady=5, padx=10)
             uri_entry = Entry(dialog)
             uri_entry.pack(fill="x", pady=5, padx=10)
@@ -324,8 +303,7 @@ class OTPApp(tk.Tk):
 
     def delete_service(self, service_name):
         confirm = messagebox.askyesno(
-            "Delete Service",
-            f"Are you sure you want to delete '{service_name}'?"
+            "Delete Service", f"Are you sure you want to delete '{service_name}'?"
         )
         if confirm:
             self.manager.delete_service(service_name)
