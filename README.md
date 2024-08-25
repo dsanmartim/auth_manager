@@ -16,6 +16,11 @@
 ### Prerequisites
 
 - Python 3.11 or higher
+- ``tkinter`` must be installed on your system. It is usually included with Python, but if not, you may need to install it separately:
+
+    - On Debian/Ubuntu-based systems: `sudo apt-get install python3-tk`
+    - On RedHat/CentOS-based systems: `sudo yum install python3-tkinter`
+    - On macOS, `tkinter` is included with the Python framework.
 
 ### Setup
 
