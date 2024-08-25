@@ -36,7 +36,7 @@ class OTPApp(tk.Tk):
             cursor="hand2",
             bg=self.bg_color,
         )
-        plus_button.place(relx=0.9, rely=0.9, anchor="center")
+        plus_button.place(relx=0.9, rely=0.92, anchor="center")
         plus_button.bind("<Button-1>", lambda e: self.add_service())
 
         # Load and display existing services
