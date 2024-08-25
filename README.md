@@ -52,13 +52,6 @@
 2. **Edit a Service**: Click on the three-dot menu next to the service you want to edit, select "Edit," make the necessary changes, and click "Save."
 3. **Delete a Service**: Click on the three-dot menu next to the service you want to delete, select "Delete," and confirm the deletion.
 
-
-## Project Structure
-
-- **auth_manager/**: Contains the core application files ( and ).
-- **data/**: Stores the  file, which contains your service data.
-- **tests/**: Contains unit tests for the application.
-
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a pull request or open an issue if you have suggestions for improvements or encounter any bugs.
