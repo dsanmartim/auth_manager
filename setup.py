@@ -20,6 +20,7 @@ setup(
             "auth-manager = auth_manager.gui:OTPApp",
         ],
     },
+    license="MIT",
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
