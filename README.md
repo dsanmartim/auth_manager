@@ -65,8 +65,8 @@ Contributions are welcome! Please feel free to submit a pull request or open an 
 
 ### Running Tests
 
-Unit tests are provided to verify the functionality of the Auth Manager. 
-If you make a contribution, make sure to add unit test to it. 
+Unit tests are provided to verify the functionality of the Auth Manager.
+If you make a contribution, make sure to add unit test to it.
 To run the tests, execute the following command:
 
 ```bash
@@ -82,4 +82,3 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 **David Sanmartim**
 - GitHub: [dsanmartim](https://github.com/dsanmartim)
 - Email: [davidsanm@gmail.com](mailto:davidsanm@gmail.com)
-

@@ -2,8 +2,6 @@ import os
 import unittest
 from unittest.mock import Mock, patch
 
-import pyotp
-
 from auth_manager.manager import OTPManager
 
 
