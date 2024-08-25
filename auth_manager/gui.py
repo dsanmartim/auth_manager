@@ -119,11 +119,16 @@ class OTPApp(tk.Tk):
         code_frame = tk.Frame(text_frame, bg=self.card_bg_color)
         code_frame.pack(side="top", anchor="w")
 
-        # OTP code
+        # OTP code (now as a Label widget again)
         code_label = tk.Label(
-            code_frame, font=self.code_font, fg=self.code_color, bg=self.card_bg_color
+            code_frame,
+            text=self.manager.get_code(name),
+            font=self.code_font,
+            fg=self.code_color,
+            bg=self.card_bg_color,
         )
         code_label.pack(side="left", anchor="w")
+        code_label.bind("<Button-1>", lambda e: self.copy_to_clipboard(code_label))
 
         # Countdown label (next to the code)
         countdown_label = tk.Label(
@@ -137,9 +142,6 @@ class OTPApp(tk.Tk):
 
         # Store references to labels for updating later
         self.service_cards.append((name, code_label, countdown_label))
-
-        # Initialize code
-        self.update_code(name, code_label)
 
         # Three dots menu inside a circle
         canvas = tk.Canvas(
@@ -162,6 +164,18 @@ class OTPApp(tk.Tk):
             anchor="center",
         )
         canvas.bind("<Button-1>", lambda e, n=name: self.show_options_menu(n, canvas))
+
+    def copy_to_clipboard(self, label):
+        """Copy the text of the label to the clipboard and show feedback."""
+        self.clipboard_clear()
+        self.clipboard_append(label.cget("text"))
+
+        # Show feedback by temporarily changing the label's text or color
+        original_text = label.cget("text")
+        original_color = label.cget("fg")
+
+        label.config(text="Copied!", fg="green")
+        self.after(1000, lambda: label.config(text=original_text, fg=original_color))
 
     def update_code(self, service_name, code_label):
         """Update the OTP code for a specific service."""
