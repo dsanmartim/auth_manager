@@ -26,7 +26,7 @@
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/yourusername/auth_manager.git
+    git clone https://github.com/dsanmartim/auth_manager.git
     cd auth_manager
     ```
 
