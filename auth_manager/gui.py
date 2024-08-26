@@ -64,7 +64,7 @@ class OTPApp(tk.Tk):
             self.bg_color = None  # Dark background color
             self.fg_color = "#FFFFFF"  # Light text color
             self.card_bg_color = "#444444"  # Card background color
-            self.card_fg_color = "white"  # Card text color
+            self.card_fg_color = "#FFFFFF"  # Card text color
             self.code_color = "#FFA500"  # Orange for the OTP code in dark mode
             self.plus_color = "#007BFF"  # Color for the plus sign
         else:
@@ -284,7 +284,7 @@ class OTPApp(tk.Tk):
             "otpauth://totp/ServiceName?secret=JBSWX3DPEHPK3PXP",
         ]:
             entry.delete(0, tk.END)
-            entry.config(fg="black")
+            entry.config(fg=self.fg_color)
 
     def add_placeholder(self, event, entry, placeholder):
         if entry.get() == "":
