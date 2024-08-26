@@ -138,6 +138,19 @@ class OTPApp(tk.Tk):
         self.configure(bg=self.bg_color)
 
     def refresh_service_list(self):
+        """
+        Refreshes the service list in the GUI.
+
+        This method cancels any ongoing countdown, destroys existing service cards,
+        creates new service cards based on the services in the manager, and starts
+        a countdown for all services.
+
+        Args:
+            None
+
+        Returns:
+            None
+        """
         # Cancel any ongoing countdown
         if self.countdown_id:
             self.after_cancel(self.countdown_id)
