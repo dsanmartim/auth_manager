@@ -39,12 +39,14 @@ class OTPApp(tk.Tk):
         plus_button.place(relx=0.9, rely=0.92, anchor="center")
         plus_button.bind("<Button-1>", lambda e: self.add_service())
 
+        # Variable to track the countdown ID
+        self.countdown_id = None
+
         # Load and display existing services
         self.refresh_service_list()
 
     def detect_dark_mode(self):
         if sys.platform == "darwin":
-            # Use the `defaults` command to check if dark mode is enabled
             try:
                 result = subprocess.run(
                     ["defaults", "read", "-g", "AppleInterfaceStyle"],
@@ -53,10 +55,8 @@ class OTPApp(tk.Tk):
                 )
                 return "Dark" in result.stdout
             except subprocess.CalledProcessError:
-                # If the command fails, assume light mode
                 return False
         else:
-            # Assume light mode on other platforms (Windows, Linux)
             return False
 
     def apply_theme(self):
@@ -64,7 +64,7 @@ class OTPApp(tk.Tk):
             self.bg_color = None  # Dark background color
             self.fg_color = "#FFFFFF"  # Light text color
             self.card_bg_color = "#444444"  # Card background color
-            self.card_fg_color = "#FFFFFF"  # Card text color
+            self.card_fg_color = "white"  # Card text color
             self.code_color = "#FFA500"  # Orange for the OTP code in dark mode
             self.plus_color = "#007BFF"  # Color for the plus sign
         else:
@@ -78,6 +78,10 @@ class OTPApp(tk.Tk):
         self.configure(bg=self.bg_color)
 
     def refresh_service_list(self):
+        # Cancel any ongoing countdown
+        if self.countdown_id:
+            self.after_cancel(self.countdown_id)
+
         for widget in self.services_frame.winfo_children():
             widget.destroy()
 
@@ -89,7 +93,6 @@ class OTPApp(tk.Tk):
         self.start_countdown(30)
 
     def create_service_card(self, name):
-        # Frame for each service "card"
         card_frame = tk.Frame(
             self.services_frame,
             bd=1,
@@ -100,11 +103,9 @@ class OTPApp(tk.Tk):
         )
         card_frame.pack(fill="x", pady=5)
 
-        # Frame for service name and code
         text_frame = tk.Frame(card_frame, bg=self.card_bg_color)
         text_frame.pack(side="left", fill="x", expand=True)
 
-        # Service name
         service_name_label = tk.Label(
             text_frame,
             text=name,
@@ -115,11 +116,9 @@ class OTPApp(tk.Tk):
         )
         service_name_label.pack(side="top", anchor="w")
 
-        # OTP code and countdown frame
         code_frame = tk.Frame(text_frame, bg=self.card_bg_color)
         code_frame.pack(side="top", anchor="w")
 
-        # OTP code (now as a Label widget again)
         code_label = tk.Label(
             code_frame,
             text=self.manager.get_code(name),
@@ -130,7 +129,6 @@ class OTPApp(tk.Tk):
         code_label.pack(side="left", anchor="w")
         code_label.bind("<Button-1>", lambda e: self.copy_to_clipboard(code_label))
 
-        # Countdown label (next to the code)
         countdown_label = tk.Label(
             code_frame,
             text="30",
@@ -140,10 +138,8 @@ class OTPApp(tk.Tk):
         )
         countdown_label.pack(side="left", padx=10)
 
-        # Store references to labels for updating later
         self.service_cards.append((name, code_label, countdown_label))
 
-        # Three dots menu inside a circle
         canvas = tk.Canvas(
             card_frame,
             width=30,
@@ -166,11 +162,9 @@ class OTPApp(tk.Tk):
         canvas.bind("<Button-1>", lambda e, n=name: self.show_options_menu(n, canvas))
 
     def copy_to_clipboard(self, label):
-        """Copy the text of the label to the clipboard and show feedback."""
         self.clipboard_clear()
         self.clipboard_append(label.cget("text"))
 
-        # Show feedback by temporarily changing the label's text or color
         original_text = label.cget("text")
         original_color = label.cget("fg")
 
@@ -178,7 +172,6 @@ class OTPApp(tk.Tk):
         self.after(1000, lambda: label.config(text=original_text, fg=original_color))
 
     def update_code(self, service_name, code_label):
-        """Update the OTP code for a specific service."""
         code = self.manager.get_code(service_name)
         code_label.config(text=code)
 
@@ -187,14 +180,12 @@ class OTPApp(tk.Tk):
             for _, code_label, countdown_label in self.service_cards:
                 countdown_label.config(text=f"{remaining}")
             remaining -= 1
-            self.after(1000, self.start_countdown, remaining)
+            self.countdown_id = self.after(1000, self.start_countdown, remaining)
         else:
-            # When the countdown finishes, refresh all codes
             self.refresh_all_codes()
-            self.start_countdown(30)  # Restart countdown after refreshing
+            self.start_countdown(30)
 
     def refresh_all_codes(self):
-        """Automatically refresh all codes after countdown."""
         for name, code_label, _ in self.service_cards:
             self.update_code(name, code_label)
 
@@ -224,7 +215,6 @@ class OTPApp(tk.Tk):
         dialog.geometry("350x200")
 
         if title == "Add Service":
-            # Service Name
             Label(
                 dialog,
                 text="Service Name:",
@@ -243,7 +233,6 @@ class OTPApp(tk.Tk):
                 lambda e: self.add_placeholder(e, name_entry, "Service Name"),
             )
 
-            # TOTP URI
             Label(
                 dialog, text="TOTP URI:", anchor="w", bg=self.bg_color, fg=self.fg_color
             ).pack(fill="x", pady=5, padx=10)
@@ -259,7 +248,6 @@ class OTPApp(tk.Tk):
             )
 
         else:
-            # Service Name
             Label(
                 dialog,
                 text="Service Name:",
@@ -271,7 +259,6 @@ class OTPApp(tk.Tk):
             name_entry.pack(fill="x", pady=5, padx=10)
             name_entry.insert(0, name)
 
-            # TOTP URI
             Label(
                 dialog, text="TOTP URI:", anchor="w", bg=self.bg_color, fg=self.fg_color
             ).pack(fill="x", pady=5, padx=10)
@@ -279,7 +266,6 @@ class OTPApp(tk.Tk):
             uri_entry.pack(fill="x", pady=5, padx=10)
             uri_entry.insert(0, uri)
 
-        # Save Button
         save_button = Button(
             dialog,
             text="Save",
@@ -289,7 +275,6 @@ class OTPApp(tk.Tk):
         )
         save_button.pack(pady=10)
 
-        # Make dialog responsive to content
         dialog.update_idletasks()
         dialog.minsize(400, dialog.winfo_height())
 
