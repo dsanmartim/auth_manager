@@ -166,6 +166,16 @@ class OTPApp(tk.Tk):
         self.start_countdown(30)
 
     def create_service_card(self, name):
+        """
+        Creates a service card widget for the given service name.
+
+        Args:
+            name (str): The name of the service.
+
+        Returns:
+            None
+        """
+
         card_frame = tk.Frame(
             self.services_frame,
             bd=1,
@@ -235,6 +245,16 @@ class OTPApp(tk.Tk):
         canvas.bind("<Button-1>", lambda e, n=name: self.show_options_menu(n, canvas))
 
     def copy_to_clipboard(self, label):
+        """
+        Copies the text from the given label to the clipboard and updates
+        the label's text temporarily.
+
+        Args:
+            label: The label from which the text will be copied.
+
+        Returns:
+            None
+        """
         self.clipboard_clear()
         self.clipboard_append(label.cget("text"))
 
@@ -245,10 +265,26 @@ class OTPApp(tk.Tk):
         self.after(1000, lambda: label.config(text=original_text, fg=original_color))
 
     def update_code(self, service_name, code_label):
+        """
+        Updates the code label with the code for the specified service.
+
+        Args:
+            service_name (str): The name of the service.
+            code_label (tkinter.Label): The label to update with the code.
+        """
         code = self.manager.get_code(service_name)
         code_label.config(text=code)
 
     def start_countdown(self, remaining):
+        """
+        Starts a countdown timer.
+
+        Args:
+            remaining (int): The remaining time in seconds.
+
+        Returns:
+            None
+        """
         if remaining >= 0:
             for _, code_label, countdown_label in self.service_cards:
                 countdown_label.config(text=f"{remaining}")
@@ -259,10 +295,26 @@ class OTPApp(tk.Tk):
             self.start_countdown(30)
 
     def refresh_all_codes(self):
+        """
+        Refreshes all the codes for the service cards.
+
+        This method iterates over each service card and calls the
+        `update_code` method to update the code for that service.
+        """
         for name, code_label, _ in self.service_cards:
             self.update_code(name, code_label)
 
     def show_options_menu(self, service_name, button):
+        """
+        Displays the options menu for a specific service.
+
+        Args:
+            service_name (str): The name of the service.
+            button (Tkinter.Button): The button that triggered the menu.
+
+        Returns:
+            None
+        """
         menu = Menu(self, tearoff=0)
         menu.add_command(label="Edit", command=lambda: self.edit_service(service_name))
         menu.add_command(
@@ -271,6 +323,9 @@ class OTPApp(tk.Tk):
         menu.post(button.winfo_rootx(), button.winfo_rooty())
 
     def add_service(self):
+        """
+        Opens a dialog to add a new service.
+        """
         self.show_edit_dialog("Add Service")
 
     def edit_service(self, service_name):
