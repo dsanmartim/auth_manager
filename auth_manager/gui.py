@@ -8,6 +8,50 @@ from .manager import OTPManager
 
 
 class OTPApp(tk.Tk):
+    """
+    A class representing the OTPApp, which is a GUI application for managing 2FA codes.
+
+    Attributes:
+        manager (OTPManager): An instance of the OTPManager class for managing OTP codes.
+        is_dark_mode (bool): A flag indicating whether the application is in dark mode.
+        bg_color (str): The background color of the application.
+        fg_color (str): The text color of the application.
+        card_bg_color (str): The background color of the service cards.
+        card_fg_color (str): The text color of the service cards.
+        code_color (str): The color of the OTP code.
+        plus_color (str): The color of the plus sign button.
+        service_name_font (Font): The font for the service names.
+        code_font (Font): The font for the OTP codes.
+        plus_font (Font): The font for the plus sign button.
+        services_frame (tk.Frame): The frame that holds all the service cards.
+        countdown_id (int): The ID of the countdown timer.
+        service_cards (list): A list of tuples containing the service name, code label,
+            and countdown label for each service card.
+
+    Methods:
+        detect_dark_mode(): Detects whether the system is in dark mode.
+        apply_theme(): Applies the theme (dark or light) to the application.
+        refresh_service_list(): Refreshes the list of services and displays them.
+        create_service_card(name): Creates a service card for the given service name.
+        copy_to_clipboard(label): Copies the text of the given label to the clipboard.
+        update_code(service_name, code_label): Updates the OTP code for the given
+            service name.
+        start_countdown(remaining): Starts the countdown timer for refreshing the
+            OTP codes.
+        refresh_all_codes(): Refreshes the OTP codes for all services.
+        show_options_menu(service_name, button): Shows the options menu for the given
+            service name.
+        add_service(): Shows the dialog for adding a new service.
+        edit_service(service_name): Shows the dialog for editing the given service.
+        show_edit_dialog(
+            title, name="Service Name", uri="otpauth://totp/ServiceName?secret=
+            JBSWX3DPEHPK3PXP"): Shows the edit dialog for adding or editing a service.
+        clear_placeholder(event, entry): Clears the placeholder text when the entry
+            field is focused.
+        save_service(dialog, name, uri, original_name): Saves the service with the given
+        name and URI.
+    """
+
     def __init__(self):
         super().__init__()
         self.title("2FA Manager")
