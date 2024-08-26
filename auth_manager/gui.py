@@ -90,6 +90,12 @@ class OTPApp(tk.Tk):
         self.refresh_service_list()
 
     def detect_dark_mode(self):
+        """
+        Detects if the operating system is currently in dark mode.
+
+        Returns:
+            bool: True if the operating system is in dark mode, False otherwise.
+        """
         if sys.platform == "darwin":
             try:
                 result = subprocess.run(
@@ -104,6 +110,16 @@ class OTPApp(tk.Tk):
             return False
 
     def apply_theme(self):
+        """
+        Applies the selected theme to the GUI.
+
+        If the dark mode is enabled, it sets the background color to dark, text color
+        to light, card background color to a dark shade, card text color to light, OTP
+        code color to orange, and plus sign color to blue. Otherwise, it sets the
+        background color to light, text color to dark, card background color to a light
+        shade, card text color to dark, OTP code color to blue, and plus sign color
+        to blue.
+        """
         if self.is_dark_mode:
             self.bg_color = None  # Dark background color
             self.fg_color = "#FFFFFF"  # Light text color
